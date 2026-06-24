@@ -3366,12 +3366,35 @@
       const sourceY = Math.max(0, image.height - sourceHeight);
       ctx.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, width, height);
     }
+    function canvasToBlob(canvas) {
+      return new Promise((resolve) => canvas.toBlob((blob) => resolve(blob), "image/png", 0.96));
+    }
+    async function saveCanvasImage(canvas, fileName) {
+      const blob = await canvasToBlob(canvas);
+      if (!blob) throw new Error("canvas export failed");
+      const file = new File([blob], fileName, { type: "image/png" });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: "Aurora Daily Compass" });
+        showToast("已開啟手機儲存選單");
+        return;
+      }
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName;
+      link.rel = "noopener";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 45000);
+      showToast("已產生金句卡圖片");
+    }
     function downloadCurrentCard() {
       if (!state.currentCard) return showToast("請先抽一張卡");
       const card = state.currentCard; const theme = themeOf(card); const canvas = document.createElement("canvas"); const scale = 2;
       canvas.width = 1080 * scale; canvas.height = 1350 * scale; const ctx = canvas.getContext("2d"); ctx.scale(scale, scale);
       const bg = new Image(); bg.onload = () => drawDownload(bg); bg.onerror = () => drawDownload(null); bg.src = AURORA_IMAGE_SRC;
-      function drawDownload(image) {
+      async function drawDownload(image) {
         if (image) drawCoverImage(ctx, image, 1080, 1350); else { ctx.fillStyle = "#062b2f"; ctx.fillRect(0, 0, 1080, 1350); }
         ctx.fillStyle = "rgba(255,255,255,0.92)"; ctx.font = "800 34px 'Noto Sans TC', sans-serif"; ctx.fillText(`Aurora Daily Compass · ${theme.name}`, 72, 92);
         ctx.fillStyle = "#ffffff"; ctx.font = "900 58px 'Noto Sans TC', sans-serif"; wrapCanvasText(ctx, card.title, 72, 190, 900, 72, 2);
@@ -3382,7 +3405,7 @@
         ctx.fillStyle = "#bfffd6"; ctx.font = "800 39px 'Noto Sans TC', sans-serif"; ctx.fillText("今日行動", 72, 1110);
         ctx.fillStyle = "#ffffff"; ctx.font = "400 47px 'Noto Sans TC', sans-serif"; wrapCanvasText(ctx, card.action, 252, 1110, 690, 67, 2);
         ctx.fillStyle = "rgba(255,255,255,0.72)"; ctx.font = "800 26px 'Noto Sans TC', sans-serif"; ctx.fillText("Her Aurora", 72, 1272);
-        const link = document.createElement("a"); link.download = `aurora-daily-compass-${card.id}.png`; link.href = canvas.toDataURL("image/png"); link.click(); showToast("已下載金句卡");
+        try { await saveCanvasImage(canvas, `aurora-daily-compass-${card.id}.png`); } catch (error) { showToast("下載失敗，請改用分享或截圖保存"); }
       }
     }
     function bindEvents() {
