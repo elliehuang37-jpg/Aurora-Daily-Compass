@@ -34,16 +34,15 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", sans-serif;
       letter-spacing: 0;
       background:
-        radial-gradient(circle at 20% 0%, rgba(152, 73, 10, 0.22), transparent 18rem),
-        radial-gradient(circle at 80% 8%, rgba(14, 120, 63, 0.2), transparent 18rem),
-        #f8f8f1;
+        linear-gradient(105deg, rgba(255, 209, 58, 0.62) 0%, rgba(228, 244, 118, 0.56) 42%, rgba(108, 224, 129, 0.38) 72%, rgba(245, 250, 236, 0.94) 100%),
+        #fbf8e8;
     }
     button { font: inherit; cursor: pointer; }
     .phone-shell {
       width: min(100%, 430px);
       min-height: 100vh;
       margin: 0 auto;
-      background: linear-gradient(180deg, #fffdf6 0%, #f5f7ef 100%);
+      background: linear-gradient(180deg, rgba(255,255,250,0.94) 0%, rgba(248,251,237,0.92) 100%);
       position: relative;
       overflow-x: hidden;
       box-shadow: 0 0 0 1px rgba(0,0,0,0.05), 0 24px 80px rgba(0,0,0,0.12);
@@ -68,15 +67,16 @@
     .intro { border: 1px solid rgba(152,73,10,0.16); border-radius: 18px; padding: 14px; background: rgba(255,255,255,0.72); }
     .intro p { margin: 0; color: #52544f; font-size: 14px; line-height: 1.6; }
     .intro strong { color: var(--orange); }
-    .theme-strip { display: flex; gap: 9px; overflow-x: auto; padding: 2px 0 8px; scrollbar-width: none; }
+    .theme-strip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 7px; padding: 2px 0 8px; }
     .theme-strip::-webkit-scrollbar { display: none; }
     .theme-chip {
-      flex: 0 0 auto; min-height: 40px; border: 1px solid rgba(14,120,63,0.22); border-radius: 999px;
-      background: rgba(255,255,255,0.8); color: #41443f; padding: 0 13px;
-      display: inline-flex; align-items: center; gap: 7px; font-weight: 800;
+      width: 100%; min-height: 36px; border: 1px solid rgba(14,120,63,0.22); border-radius: 999px;
+      background: rgba(255,255,255,0.8); color: #41443f; padding: 0 6px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 4px; font-size: 13px; font-weight: 800;
     }
-    .theme-chip::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--theme); }
-    .theme-chip.active { background: #151515; border-color: #151515; color: #fff; }
+    .theme-chip::before { content: none; }
+    .theme-icon { width: 19px; height: 19px; display: inline-grid; place-items: center; border-radius: 999px; background: rgba(255,255,255,0.64); font-size: 12px; }
+    .theme-chip.active { background: var(--theme); border-color: var(--theme); color: #fff; box-shadow: 0 10px 22px color-mix(in srgb, var(--theme) 32%, transparent); }
     .card-wrap { display: grid; gap: 14px; }
     .quote-card {
       --theme: var(--orange);
@@ -103,9 +103,12 @@
       width: 70px; height: 70px; border-radius: 50%; display: grid; place-items: center;
       background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.22); backdrop-filter: blur(12px);
     }
-    .card-meta { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-    .theme-pill { color: #fff; font-size: 13px; font-weight: 900; text-shadow: 0 2px 12px rgba(0,0,0,0.72); }
+    .card-meta { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+    .meta-right { display: inline-flex; align-items: center; gap: 8px; }
+    .theme-pill { display: inline-flex; align-items: center; gap: 6px; color: #fff; font-size: 13px; font-weight: 900; padding: 6px 10px; border-radius: 999px; background: color-mix(in srgb, var(--theme) 86%, rgba(0,0,0,0.18)); box-shadow: 0 8px 20px rgba(0,0,0,0.22); text-shadow: 0 2px 12px rgba(0,0,0,0.42); }
     .card-number { color: rgba(255,255,255,0.88); font-size: 12px; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.72); }
+    .card-favorite { min-height: 32px; border: 1px solid rgba(255,255,255,0.34); border-radius: 999px; padding: 0 10px; background: rgba(255,255,255,0.18); color: #fff; backdrop-filter: blur(12px); font-size: 12px; font-weight: 900; box-shadow: 0 8px 20px rgba(0,0,0,0.18); }
+    .card-favorite.active { background: rgba(255,255,255,0.92); color: #9d2b20; }
     .quote-content { padding: 34px 0 22px; }
     .quote-title { margin: 0 0 16px; font-size: clamp(24px, 8vw, 36px); line-height: 1.18; font-weight: 900; text-shadow: 0 3px 16px rgba(0,0,0,0.82); }
     .quote-text { margin: 0; font-size: clamp(22px, 7.2vw, 35px); line-height: 1.4; font-weight: 850; white-space: pre-line; text-shadow: 0 3px 18px rgba(0,0,0,0.88); }
@@ -119,6 +122,10 @@
     }
     .reflection span { color: #bfffd6; font-size: 14px; font-weight: 900; }
     .reflection p { margin: 0; color: rgba(255,255,255,0.94); line-height: 1.58; font-size: 16px; white-space: pre-line; text-shadow: 0 2px 10px rgba(0,0,0,0.6); }
+    .journal { border: 1px solid rgba(255,255,255,0.24); border-radius: 18px; background: rgba(255,255,255,0.13); padding: 12px 13px; display: grid; gap: 8px; backdrop-filter: blur(10px); }
+    .journal label { color: #fff; font-size: 14px; font-weight: 900; text-shadow: 0 2px 10px rgba(0,0,0,0.72); }
+    .journal textarea { width: 100%; min-height: 84px; resize: vertical; border: 0; border-radius: 14px; padding: 11px 12px; background: rgba(255,255,255,0.9); color: #17322a; font: inherit; font-size: 15px; line-height: 1.55; outline: none; }
+    .journal textarea:focus { box-shadow: 0 0 0 3px rgba(80,216,110,0.28); }
     .draw-panel {
       display: grid; gap: 10px; border-radius: 24px; background: rgba(255,255,255,0.82);
       border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 12px 38px rgba(12,45,32,0.10); padding: 12px;
@@ -130,8 +137,8 @@
       display: inline-flex; align-items: center; justify-content: center; gap: 7px;
       font-weight: 850; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
     }
-    .btn.primary { background: var(--orange); color: #fff; box-shadow: 0 10px 22px rgba(152,73,10,0.28); }
-    .btn.green { background: var(--green); color: #fff; box-shadow: 0 10px 22px rgba(14,120,63,0.25); }
+    .btn.primary { background: #F36B16; color: #fff; box-shadow: 0 10px 22px rgba(243,107,22,0.26); }
+    .btn.green { background: #28B85B; color: #fff; box-shadow: 0 10px 22px rgba(40,184,91,0.24); }
     .btn.icon { min-height: 42px; font-size: 12px; color: #52544f; }
     .btn.active { color: var(--orange); box-shadow: inset 0 0 0 2px rgba(152,73,10,0.46); }
     .status-panel {
@@ -146,7 +153,7 @@
       box-shadow: 0 18px 52px rgba(0,0,0,0.18); padding: 7px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px;
     }
     .nav-btn { min-height: 42px; border: 0; border-radius: 999px; background: rgba(14,120,63,0.14); color: var(--green-dark); font-size: 13px; font-weight: 850; }
-    .nav-btn.active { background: var(--orange); color: #fff; box-shadow: 0 8px 22px rgba(152,73,10,0.32); }
+    .nav-btn.active { background: #F36B16; color: #fff; box-shadow: 0 8px 22px rgba(243,107,22,0.32); }
     .toast {
       position: fixed; left: 50%; bottom: calc(82px + env(safe-area-inset-bottom)); transform: translateX(-50%) translateY(18px);
       opacity: 0; pointer-events: none; z-index: 40; background: #151515; color: #fff;
@@ -180,7 +187,7 @@
           </div>
           <div class="counter"><span id="remainingCount">250</span><span>/250</span></div>
         </div>
-        <div class="intro"><p><strong>五大主題各 50 張。</strong>每次抽卡都會從未抽過的牌組中出現，抽完一輪才重新洗牌。</p></div>
+        <div class="intro"><p>請點擊抽卡，給此刻的你，一句話，一個提醒，一個反思。</p></div>
       </header>
       <section id="themes" class="theme-strip" aria-label="主題選擇"></section>
       <main class="card-wrap" id="draw">
@@ -189,7 +196,7 @@
             <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="30" height="30"><circle cx="12" cy="12" r="8"></circle><path d="m14.5 9.5-1.5 3.5-3.5 1.5 1.5-3.5 3.5-1.5Z"></path></svg></div>
           </div>
           <div class="card-body" id="cardBody" hidden>
-            <div class="card-meta"><span class="theme-pill" id="cardTheme"></span><span class="card-number" id="cardNumber"></span></div>
+            <div class="card-meta"><span class="theme-pill" id="cardTheme"></span><div class="meta-right"><span class="card-number" id="cardNumber"></span><button class="card-favorite" id="favoriteCardTop" type="button">🤍 收藏</button></div></div>
             <div class="quote-content">
               <h3 class="quote-title" id="cardTitle"></h3>
               <p class="quote-text" id="cardQuote"></p>
@@ -199,12 +206,13 @@
             <div class="reflection-grid">
               <div class="reflection"><span>覺察提問</span><p id="cardQuestion"></p></div>
               <div class="reflection"><span>今日行動</span><p id="cardAction"></p></div>
+              <div class="journal"><label for="cardJournal">✍ 我的反思</label><textarea id="cardJournal" placeholder="寫下此刻的想法、感受或下一步..."></textarea></div>
             </div>
           </div>
         </article>
         <section class="draw-panel" aria-label="抽卡操作">
           <div class="action-row"><button class="btn primary" id="drawAny" type="button">今日抽卡</button><button class="btn green" id="drawTheme" type="button">抽此主題</button></div>
-          <div class="tool-row"><button class="btn icon" id="favoriteCard" type="button">收藏</button><button class="btn icon" id="copyCard" type="button">複製</button><button class="btn icon" id="shareCard" type="button">分享</button><button class="btn icon" id="downloadCard" type="button">下載</button></div>
+          <div class="tool-row"><button class="btn icon" id="favoriteCard" type="button">🤍 收藏</button><button class="btn icon" id="copyCard" type="button">複製</button><button class="btn icon" id="shareCard" type="button">分享</button><button class="btn icon" id="downloadCard" type="button">下載</button></div>
         </section>
       </main>
       <section class="status-panel" id="progress">
@@ -223,35 +231,40 @@
         "id": "spirit",
         "name": "心靈覺察篇",
         "shortName": "心靈",
-        "color": "#98490A",
+        "color": "#D6A11C",
+        "icon": "💛",
         "description": "回到內在真實，辨認情緒、信念與生命方向。"
       },
       {
         "id": "wellness",
         "name": "身心健康篇",
         "shortName": "身心",
-        "color": "#0E783F",
+        "color": "#168B52",
+        "icon": "🌿",
         "description": "照顧身體訊號、能量節奏與可持續的生活狀態。"
       },
       {
         "id": "career",
         "name": "事業成長篇",
         "shortName": "事業",
-        "color": "#813C08",
+        "color": "#2F6FD6",
+        "icon": "🚀",
         "description": "建立專業價值、影響力與長期成長策略。"
       },
       {
         "id": "wealth",
         "name": "財富意識篇",
         "shortName": "財富",
-        "color": "#0C6636",
+        "color": "#B77712",
+        "icon": "💰",
         "description": "重整金錢信念、價值交換與自由選擇的能力。"
       },
       {
         "id": "relationship",
         "name": "關係連結篇",
         "shortName": "關係",
-        "color": "#985B0F",
+        "color": "#7B4ACB",
+        "icon": "💜",
         "description": "練習真實連結、成熟溝通與健康界線。"
       }
     ];
@@ -3257,17 +3270,18 @@
         "author": "Her Aurora"
       }
     ];
-    const state = { selectedThemeId: themes[0].id, currentCard: null, favorites: JSON.parse(localStorage.getItem("auroraDailyCompassFavoritesV2") || "[]") };
+    const state = { selectedThemeId: themes[0].id, currentCard: null, favorites: JSON.parse(localStorage.getItem("auroraDailyCompassFavoritesV2") || "[]"), journals: JSON.parse(localStorage.getItem("auroraDailyCompassJournalsV1") || "{}") };
     const ALL_QUEUE_KEY = "auroraDailyCompassAllQueueV2";
     const THEME_QUEUE_KEY = "auroraDailyCompassThemeQueuesV2";
+    const JOURNAL_KEY = "auroraDailyCompassJournalsV1";
     const nodes = {
       remainingCount: document.getElementById("remainingCount"), themes: document.getElementById("themes"), quoteCard: document.getElementById("quoteCard"),
       emptyState: document.getElementById("emptyState"), cardBody: document.getElementById("cardBody"), cardTheme: document.getElementById("cardTheme"),
       cardNumber: document.getElementById("cardNumber"), cardTitle: document.getElementById("cardTitle"), cardQuote: document.getElementById("cardQuote"),
       cardReminder: document.getElementById("cardReminder"), cardQuestion: document.getElementById("cardQuestion"), cardAction: document.getElementById("cardAction"),
       selectedThemeLabel: document.getElementById("selectedThemeLabel"), queueStatus: document.getElementById("queueStatus"), favoriteCount: document.getElementById("favoriteCount"),
-      drawAny: document.getElementById("drawAny"), drawTheme: document.getElementById("drawTheme"), favoriteCard: document.getElementById("favoriteCard"),
-      copyCard: document.getElementById("copyCard"), shareCard: document.getElementById("shareCard"), downloadCard: document.getElementById("downloadCard"), toast: document.getElementById("toast")
+      drawAny: document.getElementById("drawAny"), drawTheme: document.getElementById("drawTheme"), favoriteCard: document.getElementById("favoriteCard"), favoriteCardTop: document.getElementById("favoriteCardTop"),
+      cardJournal: document.getElementById("cardJournal"), copyCard: document.getElementById("copyCard"), shareCard: document.getElementById("shareCard"), downloadCard: document.getElementById("downloadCard"), toast: document.getElementById("toast")
     };
     function themeOf(card) { return themes.find((theme) => theme.id === card.themeId) || themes[0]; }
     function cardById(id) { return cards.find((card) => card.id === id); }
@@ -3295,16 +3309,18 @@
     }
     function isFavorite(cardId) { return state.favorites.includes(cardId); }
     function saveFavorites() { localStorage.setItem("auroraDailyCompassFavoritesV2", JSON.stringify(state.favorites)); }
+    function saveJournals() { localStorage.setItem(JOURNAL_KEY, JSON.stringify(state.journals)); }
     function showToast(message) { nodes.toast.textContent = message; nodes.toast.classList.add("show"); clearTimeout(showToast.timer); showToast.timer = setTimeout(() => nodes.toast.classList.remove("show"), 1700); }
     function cardText(card = state.currentCard) {
       if (!card) return "Aurora Daily Compass";
       const theme = themeOf(card);
-      return `Aurora Daily Compass｜${theme.name}\n\n${theme.shortName} · ${String(card.number).padStart(2, "0")}\n${card.title}\n${card.quote}\n\n轉換視角：${card.reminder}\n\n覺察提問：${card.question}\n\n今日行動：${card.action}\n\nHer Aurora`;
+      const journal = state.journals[card.id] ? `\n\n我的反思：${state.journals[card.id]}` : "";
+      return `Aurora Daily Compass｜${theme.icon} ${theme.name}\n\n${theme.shortName} · ${String(card.number).padStart(2, "0")}\n${card.title}\n${card.quote}\n\n轉換視角：${card.reminder}\n\n覺察提問：${card.question}\n\n今日行動：${card.action}${journal}\n\nHer Aurora`;
     }
     function renderThemes() {
-      nodes.themes.innerHTML = themes.map((theme) => `<button class="theme-chip ${theme.id === state.selectedThemeId ? "active" : ""}" style="--theme:${theme.color}" data-theme="${theme.id}" type="button">${theme.shortName}</button>`).join("");
+      nodes.themes.innerHTML = themes.map((theme) => `<button class="theme-chip ${theme.id === state.selectedThemeId ? "active" : ""}" style="--theme:${theme.color}" data-theme="${theme.id}" type="button"><span class="theme-icon">${theme.icon}</span>${theme.shortName}</button>`).join("");
       const selected = themes.find((theme) => theme.id === state.selectedThemeId) || themes[0];
-      nodes.selectedThemeLabel.textContent = selected.name;
+      nodes.selectedThemeLabel.textContent = `${selected.icon} ${selected.name}`;
     }
     function renderProgress() {
       const allIds = new Set(cards.map((card) => card.id));
@@ -3320,16 +3336,19 @@
       nodes.quoteCard.classList.remove("empty");
       nodes.quoteCard.style.setProperty("--theme", theme.color);
       nodes.emptyState.hidden = true; nodes.cardBody.hidden = false;
-      nodes.cardTheme.textContent = `${theme.shortName} · ${String(card.number).padStart(2, "0")}`;
+      nodes.cardTheme.textContent = `${theme.icon} ${theme.shortName} · ${String(card.number).padStart(2, "0")}`;
       nodes.cardNumber.textContent = `${String(card.globalNumber).padStart(3, "0")} / ${cards.length}`;
       nodes.cardTitle.textContent = card.title; nodes.cardQuote.textContent = card.quote; nodes.cardReminder.textContent = card.reminder; nodes.cardQuestion.textContent = card.question; nodes.cardAction.textContent = card.action;
-      nodes.favoriteCard.classList.toggle("active", isFavorite(card.id));
+      nodes.cardJournal.value = state.journals[card.id] || "";
+      const favored = isFavorite(card.id);
+      [nodes.favoriteCard, nodes.favoriteCardTop].forEach((node) => { node.classList.toggle("active", favored); node.textContent = favored ? "❤️ 已收藏" : "🤍 收藏"; });
       renderProgress();
     }
     function setCurrentCard(card) { state.currentCard = card; state.selectedThemeId = card.themeId; renderThemes(); renderCard(); }
     function drawAnyCard() { const ids = new Set(cards.map((card) => card.id)); setCurrentCard(drawFromQueue(ALL_QUEUE_KEY, ids, state.currentCard?.id)); showToast("已抽出一張不重複卡片"); }
     function drawThemeCard() { const ids = new Set(cards.filter((card) => card.themeId === state.selectedThemeId).map((card) => card.id)); setCurrentCard(drawFromThemeQueue(state.selectedThemeId, ids, state.currentCard?.id)); showToast("已抽出此主題卡片"); }
     function toggleFavorite() { if (!state.currentCard) return showToast("請先抽一張卡"); const id = state.currentCard.id; state.favorites = isFavorite(id) ? state.favorites.filter((item) => item !== id) : [...state.favorites, id]; saveFavorites(); renderCard(); showToast(isFavorite(id) ? "已加入收藏" : "已移除收藏"); }
+    function saveCurrentJournal() { if (!state.currentCard) return; const value = nodes.cardJournal.value.trim(); if (value) state.journals[state.currentCard.id] = value; else delete state.journals[state.currentCard.id]; saveJournals(); }
     async function copyCurrentCard() { if (!state.currentCard) return showToast("請先抽一張卡"); try { await navigator.clipboard.writeText(cardText()); showToast("已複製金句"); } catch (error) { showToast("複製失敗"); } }
     async function shareCurrentCard() { if (!state.currentCard) return showToast("請先抽一張卡"); if (navigator.share) { try { await navigator.share({ title: "Aurora Daily Compass", text: cardText() }); return; } catch (error) { if (error.name === "AbortError") return; } } await copyCurrentCard(); }
     function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight, maxLines) {
@@ -3357,15 +3376,17 @@
         ctx.fillStyle = "rgba(255,255,255,0.92)"; ctx.font = "800 34px 'Noto Sans TC', sans-serif"; ctx.fillText(`Aurora Daily Compass · ${theme.name}`, 72, 92);
         ctx.fillStyle = "#ffffff"; ctx.font = "900 58px 'Noto Sans TC', sans-serif"; wrapCanvasText(ctx, card.title, 72, 190, 900, 72, 2);
         ctx.font = "900 76px 'Noto Sans TC', sans-serif"; const quoteBottom = wrapCanvasText(ctx, card.quote, 72, 360, 920, 98, 5);
-        ctx.fillStyle = "rgba(255,255,255,0.86)"; ctx.font = "400 34px 'Noto Sans TC', sans-serif"; wrapCanvasText(ctx, card.reminder, 72, quoteBottom + 70, 880, 50, 3);
-        ctx.fillStyle = "#bfffd6"; ctx.font = "800 28px 'Noto Sans TC', sans-serif"; ctx.fillText("今日行動", 72, 1170);
-        ctx.fillStyle = "#ffffff"; ctx.font = "400 34px 'Noto Sans TC', sans-serif"; wrapCanvasText(ctx, card.action, 220, 1170, 720, 48, 2);
+        ctx.shadowColor = "rgba(0,0,0,0.52)"; ctx.shadowBlur = 14; ctx.shadowOffsetY = 3;
+        ctx.fillStyle = "rgba(255,255,255,0.94)"; ctx.font = "800 50px 'Noto Sans TC', sans-serif"; wrapCanvasText(ctx, card.reminder, 72, quoteBottom + 74, 900, 70, 3);
+        ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+        ctx.fillStyle = "#bfffd6"; ctx.font = "800 39px 'Noto Sans TC', sans-serif"; ctx.fillText("今日行動", 72, 1110);
+        ctx.fillStyle = "#ffffff"; ctx.font = "400 47px 'Noto Sans TC', sans-serif"; wrapCanvasText(ctx, card.action, 252, 1110, 690, 67, 2);
         ctx.fillStyle = "rgba(255,255,255,0.72)"; ctx.font = "800 26px 'Noto Sans TC', sans-serif"; ctx.fillText("Her Aurora", 72, 1272);
         const link = document.createElement("a"); link.download = `aurora-daily-compass-${card.id}.png`; link.href = canvas.toDataURL("image/png"); link.click(); showToast("已下載金句卡");
       }
     }
     function bindEvents() {
-      nodes.drawAny.addEventListener("click", drawAnyCard); nodes.drawTheme.addEventListener("click", drawThemeCard); nodes.favoriteCard.addEventListener("click", toggleFavorite); nodes.copyCard.addEventListener("click", copyCurrentCard); nodes.shareCard.addEventListener("click", shareCurrentCard); nodes.downloadCard.addEventListener("click", downloadCurrentCard);
+      nodes.drawAny.addEventListener("click", drawAnyCard); nodes.drawTheme.addEventListener("click", drawThemeCard); nodes.favoriteCard.addEventListener("click", toggleFavorite); nodes.favoriteCardTop.addEventListener("click", toggleFavorite); nodes.cardJournal.addEventListener("input", saveCurrentJournal); nodes.copyCard.addEventListener("click", copyCurrentCard); nodes.shareCard.addEventListener("click", shareCurrentCard); nodes.downloadCard.addEventListener("click", downloadCurrentCard);
       nodes.themes.addEventListener("click", (event) => { const button = event.target.closest("[data-theme]"); if (!button) return; state.selectedThemeId = button.dataset.theme; renderThemes(); renderProgress(); });
       document.querySelectorAll(".nav-btn").forEach((button) => button.addEventListener("click", () => { document.querySelectorAll(".nav-btn").forEach((item) => item.classList.remove("active")); button.classList.add("active"); document.getElementById(button.dataset.target).scrollIntoView({ behavior: "smooth", block: "start" }); }));
     }
