@@ -3436,7 +3436,6 @@
         if (image) drawCoverImage(ctx, image, 1080, 1350); else { ctx.fillStyle = "#062b2f"; ctx.fillRect(0, 0, 1080, 1350); }
         ctx.fillStyle = "rgba(255,255,255,0.92)"; ctx.font = "800 34px 'Noto Sans TC', sans-serif"; ctx.fillText(`Aurora Daily Compass · ${theme.name}`, 72, 92);
         ctx.shadowColor = "rgba(0,0,0,0.52)"; ctx.shadowBlur = 14; ctx.shadowOffsetY = 3;
-        ctx.fillStyle = "#bfffd6"; ctx.font = "800 39px 'Noto Sans TC', sans-serif"; ctx.fillText("今日金句", 72, 154);
         ctx.fillStyle = "#ffffff"; ctx.font = "900 58px 'Noto Sans TC', sans-serif"; wrapCanvasText(ctx, card.title, 72, 215, 900, 72, 2);
         ctx.font = "900 76px 'Noto Sans TC', sans-serif"; const quoteBottom = wrapCanvasText(ctx, card.quote, 72, 350, 920, 96, 4);
         function drawDownloadSection(label, text, y, maxLines = 2) {
@@ -3444,9 +3443,10 @@
           ctx.fillStyle = "#ffffff"; ctx.font = "700 47px 'Noto Sans TC', sans-serif";
           return wrapCanvasText(ctx, text, 252, y, 690, 67, maxLines) + 30;
         }
-        let sectionY = Math.max(quoteBottom + 62, 720);
+        let sectionY = Math.max(quoteBottom + 62, 768);
         sectionY = drawDownloadSection("覺察提問", card.question, sectionY, 2);
         sectionY = drawDownloadSection("轉換視角", card.reminder, sectionY, 2);
+        sectionY += 118;
         drawDownloadSection("今日行動", card.action, sectionY, 2);
         ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
         ctx.fillStyle = "rgba(255,255,255,0.72)"; ctx.font = "800 26px 'Noto Sans TC', sans-serif"; ctx.fillText("Her Aurora", 72, 1272);
